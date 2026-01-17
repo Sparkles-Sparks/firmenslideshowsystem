@@ -797,8 +797,6 @@ class Slideshow {
                 this.customImages = JSON.parse(saved);
                 this.imageCounter = Math.max(...this.customImages.map(img => img.id || 0), 0);
                 this.updateSlideshow();
-            }
-        } catch (e) {
             console.error('Fehler beim Laden der Bilder:', e);
             this.customImages = [];
         }
@@ -809,172 +807,6 @@ class Slideshow {
         const savedPassword = localStorage.getItem('slideshowPassword');
         if (savedPassword) {
             this.correctPassword = savedPassword;
-        }
-        
-        const isLocked = localStorage.getItem('slideshowIsLocked');
-        if (isLocked !== null) {
-            this.isLocked = isLocked === 'true';
-            this.updateLockState();
-        }
-    }
-    
-    savePasswordProtection() {
-        localStorage.setItem('slideshowPassword', this.correctPassword);
-        localStorage.setItem('slideshowIsLocked', this.isLocked.toString());
-    }
-    
-    toggleLock() {
-        if (this.isLocked) {
-            // Entsperren - Passwort abfragen
-            this.showPasswordModal('unlock');
-        } else {
-            // Sperren
-            this.isLocked = true;
-            this.updateLockState();
-            this.savePasswordProtection();
-        }
-    }
-    
-    updateLockState() {
-        const unlockBtn = document.getElementById('unlockBtn');
-        const controlBtns = document.querySelectorAll('.control-btn:not(#unlockBtn)');
-        
-        if (this.isLocked) {
-            unlockBtn.innerHTML = '🔓 Entsperren';
-            controlBtns.forEach(btn => btn.classList.add('locked'));
-        } else {
-            unlockBtn.innerHTML = '🔒 Sperren';
-            controlBtns.forEach(btn => btn.classList.remove('locked'));
-        }
-    }
-    
-    setupPasswordModal() {
-        const modal = document.getElementById('passwordModal');
-        const closeBtn = modal.querySelector('.close');
-        const passwordInput = document.getElementById('passwordInput');
-        const submitBtn = document.getElementById('submitPassword');
-        const cancelBtn = document.getElementById('cancelPassword');
-        
-        // Modal schließen
-        closeBtn.addEventListener('click', () => {
-            this.closePasswordModal();
-        });
-        
-        // Modal schließen bei Klick außerhalb
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                this.closePasswordModal();
-            }
-        });
-        
-        // Enter-Taste im Passwortfeld
-        passwordInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                this.submitPassword();
-            }
-        });
-        
-        // Buttons
-        submitBtn.addEventListener('click', () => {
-            this.submitPassword();
-        });
-        
-        cancelBtn.addEventListener('click', () => {
-            this.closePasswordModal();
-        });
-    }
-    
-    showPasswordModal(action) {
-        this.pendingAction = action;
-        const modal = document.getElementById('passwordModal');
-        const passwordInput = document.getElementById('passwordInput');
-        const errorDiv = document.getElementById('passwordError');
-        
-        modal.style.display = 'block';
-        passwordInput.value = '';
-        passwordInput.focus();
-        errorDiv.classList.remove('show');
-        
-        // Modal-Titel anpassen
-        const title = modal.querySelector('h2');
-        switch(action) {
-            case 'unlock':
-                title.textContent = '🔐 Steuerung entsperren';
-                break;
-            case 'settings':
-                title.textContent = '🔐 Einstellungen - Passwort erforderlich';
-                break;
-            default:
-                title.textContent = '🔐 Passwort erforderlich';
-        }
-    }
-    
-    closePasswordModal() {
-        const modal = document.getElementById('passwordModal');
-        modal.style.display = 'none';
-        this.pendingAction = null;
-    }
-    
-    submitPassword() {
-        const passwordInput = document.getElementById('passwordInput');
-        const errorDiv = document.getElementById('passwordError');
-        const enteredPassword = passwordInput.value.trim();
-        
-        if (enteredPassword === this.correctPassword) {
-            this.handlePasswordSuccess();
-        } else {
-            errorDiv.textContent = 'Falsches Passwort!';
-            errorDiv.classList.add('show');
-            passwordInput.value = '';
-            passwordInput.focus();
-            
-            // Fehler nach 3 Sekunden ausblenden
-            setTimeout(() => {
-                errorDiv.classList.remove('show');
-            }, 3000);
-        }
-    }
-    
-    handlePasswordSuccess() {
-        this.closePasswordModal();
-        
-        switch(this.pendingAction) {
-            case 'unlock':
-                this.isLocked = false;
-                this.updateLockState();
-                this.savePasswordProtection();
-                break;
-            case 'settings':
-                this.openSettingsModal();
-                break;
-            case 'fullscreen':
-                this.toggleFullscreen();
-                break;
-            case 'pause':
-                this.togglePause();
-                break;
-            case 'next':
-                this.nextSlide();
-                this.resetProgress();
-                break;
-            case 'prev':
-                this.prevSlide();
-                this.resetProgress();
-                break;
-        }
-    }
-    
-    setPassword(newPassword) {
-        this.correctPassword = newPassword;
-        this.savePasswordProtection();
-    }
-    
-    showErrorMessage(message) {
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'error-message';
-        errorDiv.textContent = message;
-        document.body.appendChild(errorDiv);
-        
         setTimeout(() => {
             errorDiv.remove();
         }, 5000);
@@ -1036,4 +868,4 @@ window.addEventListener('unhandledrejection', (e) => {
     console.error('Unerfüllte Promise:', e.reason);
 });
 
-//# Created by Sparkles
+//# Created by Sparkles 
