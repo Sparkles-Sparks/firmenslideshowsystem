@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firmen Slideshow - Ladenanzeige</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="slideshow-container">
+        <div class="slide fade">
+            <img src="images/slide1.jpg" alt="Firmenbild 1">
+            <div class="slide-caption">Willkommen in unserem Geschäft</div>
+        </div>
+        
+        <div class="slide fade">
+            <img src="images/slide2.jpg" alt="Werbung 1">
+            <div class="slide-caption">Unsere Produkte</div>
+        </div>
+        
+        <div class="slide fade">
+            <img src="images/slide3.jpg" alt="Firmenbild 2">
+            <div class="slide-caption">Qualität seit 2024</div>
+        </div>
+        
+        <div class="slide fade">
+            <img src="images/slide4.jpg" alt="Werbung 2">
+            <div class="slide-caption">Aktuelle Angebote</div>
+        </div>
+        
+        <div class="slide fade">
+            <img src="images/slide5.jpg" alt="Firmenbild 3">
+            <div class="slide-caption">Unser Team</div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button id="settingsBtn" class="control-btn">⚙️ Einstellungen</button>
+        <button id="fullscreenBtn" class="control-btn">🖥️ Vollbild</button>
+        <button id="pauseBtn" class="control-btn">⏸️ Pause</button>
+        <button id="nextBtn" class="control-btn">⏭️ Nächstes</button>
+        <button id="prevBtn" class="control-btn">⏮️ Vorheriges</button>
+    </div>
+    
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>⚙️ Einstellungen</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label for="slideDuration">Slide-Dauer (Sekunden):</label>
+                    <input type="range" id="slideDuration" min="1" max="30" value="5" step="0.5">
+                    <span id="durationValue">5s</span>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="startSlide">Start bei Slide:</label>
+                    <select id="startSlide">
+                        <option value="0">Slide 1</option>
+                        <option value="1">Slide 2</option>
+                        <option value="2">Slide 3</option>
+                        <option value="3">Slide 4</option>
+                        <option value="4">Slide 5</option>
+                    </select>
+                </div>
+                
+                <div class="setting-group">
+                    <label>
+                        <input type="checkbox" id="autoHideControls" checked>
+                        Controls automatisch ausblenden
+                    </label>
+                </div>
+                
+                <div class="setting-group">
+                    <label>
+                        <input type="checkbox" id="showProgress" checked>
+                        Fortschrittsbalken anzeigen
+                    </label>
+                </div>
+                
+                <div class="setting-group">
+                    <label>
+                        <input type="checkbox" id="enableTransitions" checked>
+                        Übergangsanimationen
+                    </label>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="transitionSpeed">Übergangsgeschwindigkeit:</label>
+                    <select id="transitionSpeed">
+                        <option value="0.5">Schnell (0.5s)</option>
+                        <option value="1" selected>Normal (1s)</option>
+                        <option value="1.5">Langsam (1.5s)</option>
+                        <option value="2">Sehr langsam (2s)</option>
+                    </select>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="imageFit">Bildanpassung:</label>
+                    <select id="imageFit">
+                        <option value="cover" selected>Füllen (Cover)</option>
+                        <option value="contain">Einpassen (Contain)</option>
+                        <option value="fill">Strecken (Fill)</option>
+                        <option value="scale-down">Verkleinern</option>
+                    </select>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="captionPosition">Textposition:</label>
+                    <select id="captionPosition">
+                        <option value="bottom" selected>Unten</option>
+                        <option value="top">Oben</option>
+                        <option value="center">Mitte</option>
+                    </select>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="fontSize">Textgröße:</label>
+                    <input type="range" id="fontSize" min="12" max="48" value="32" step="2">
+                    <span id="fontSizeValue">32px</span>
+                </div>
+                
+                <div class="setting-group">
+                    <h3>📁 Bildverwaltung</h3>
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-content">
+                            <div class="upload-icon">📤</div>
+                            <p>Bilder hier hinziehen oder klicken zum Auswählen</p>
+                            <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="image-gallery" id="imageGallery">
+                        <h4>Bildübersicht & Reihenfolge</h4>
+                        <div id="galleryContainer" class="gallery-container">
+                            <!-- Bilder werden hier dynamisch eingefügt -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="setting-actions">
+                    <button id="resetSettings" class="btn-secondary">Zurücksetzen</button>
+                    <button id="saveSettings" class="btn-primary">Speichern</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="progress-bar">
+        <div class="progress-fill"></div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
+<!-- Created by Sparkles -->
