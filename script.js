@@ -25,8 +25,13 @@ class Slideshow {
         this.customImages = [];
         this.imageCounter = 0;
         
+        // Passwort-Schutz
+        this.isLocked = false;
+        this.correctPassword = 'admin123'; // Standard-Passwort
+        
         this.loadSettings();
         this.loadCustomImages();
+        this.loadPasswordProtection();
         this.init();
     }
     
@@ -159,25 +164,49 @@ class Slideshow {
     setupEventListeners() {
         // Button-Steuerung
         document.getElementById('settingsBtn').addEventListener('click', () => {
-            this.openSettingsModal();
+            if (this.isLocked) {
+                this.showPasswordModal('settings');
+            } else {
+                this.openSettingsModal();
+            }
+        });
+        
+        document.getElementById('unlockBtn').addEventListener('click', () => {
+            this.toggleLock();
         });
         
         document.getElementById('fullscreenBtn').addEventListener('click', () => {
-            this.toggleFullscreen();
+            if (this.isLocked) {
+                this.showPasswordModal('fullscreen');
+            } else {
+                this.toggleFullscreen();
+            }
         });
         
         document.getElementById('pauseBtn').addEventListener('click', () => {
-            this.togglePause();
+            if (this.isLocked) {
+                this.showPasswordModal('pause');
+            } else {
+                this.togglePause();
+            }
         });
         
         document.getElementById('nextBtn').addEventListener('click', () => {
-            this.nextSlide();
-            this.resetProgress();
+            if (this.isLocked) {
+                this.showPasswordModal('next');
+            } else {
+                this.nextSlide();
+                this.resetProgress();
+            }
         });
         
         document.getElementById('prevBtn').addEventListener('click', () => {
-            this.prevSlide();
-            this.resetProgress();
+            if (this.isLocked) {
+                this.showPasswordModal('prev');
+            } else {
+                this.prevSlide();
+                this.resetProgress();
+            }
         });
         
         // Touch-Steuerung für mobile Geräte
@@ -452,6 +481,9 @@ class Slideshow {
         
         // Bildverwaltung-Listener
         this.setupImageUpload();
+        
+        // Passwort-Modal-Listener
+        this.setupPasswordModal();
         
         // Speichern und Zurücksetzen
         document.getElementById('saveSettings').addEventListener('click', () => {

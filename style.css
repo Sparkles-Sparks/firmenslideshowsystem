@@ -618,6 +618,35 @@ body {
     font-weight: bold;
 }
 
+/* Passwort-spezifische Stile */
+.password-error {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    text-align: center;
+    padding: 5px;
+    border-radius: 4px;
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    display: none;
+}
+
+.password-error.show {
+    display: block;
+}
+
+.control-btn.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.control-btn.locked::after {
+    content: " 🔒";
+    font-size: 0.8rem;
+    margin-left: 3px;
+}
+
 /* Responsive Modal */
 @media (max-width: 768px) {
     .modal-content {

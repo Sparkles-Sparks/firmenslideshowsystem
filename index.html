@@ -36,10 +36,31 @@
     
     <div class="controls">
         <button id="settingsBtn" class="control-btn">⚙️ Einstellungen</button>
+        <button id="unlockBtn" class="control-btn">🔒 Sperren</button>
         <button id="fullscreenBtn" class="control-btn">🖥️ Vollbild</button>
         <button id="pauseBtn" class="control-btn">⏸️ Pause</button>
         <button id="nextBtn" class="control-btn">⏭️ Nächstes</button>
         <button id="prevBtn" class="control-btn">⏮️ Vorheriges</button>
+    </div>
+    
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🔐 Passwort erforderlich</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label for="passwordInput">Passwort eingeben:</label>
+                    <input type="password" id="passwordInput" placeholder="Passwort">
+                    <div id="passwordError" class="password-error"></div>
+                </div>
+                <div class="setting-actions">
+                    <button id="cancelPassword" class="btn-secondary">Abbrechen</button>
+                    <button id="submitPassword" class="btn-primary">Entsperren</button>
+                </div>
+            </div>
+        </div>
     </div>
     
     <div id="settingsModal" class="modal">
